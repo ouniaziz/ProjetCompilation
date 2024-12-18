@@ -203,11 +203,21 @@
                                                                 </label>
                                                         </div>
                                                         <br>
-                                                        <select class="form-select" aria-label="presence_apres_exam">
-                                                            <option selected>Présence après examens</option>
-                                                            <option value="oui">oui</option>
-                                                            <option value="non">non</option>
-                                                          </select>
+                                                        <label class="form-label">L'année dernière :</label>
+                                                        <div style="display: flex;flex-direction: row; gap: 50px;">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
+                                                                    <label class="form-check-label" for="flexRadioDefault1">
+                                                                    present aprés examen
+                                                                    </label>
+                                                                </div>
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                                                                    <label class="form-check-label" for="flexRadioDefault2">
+                                                                    absent aprés examen
+                                                                    </label>
+                                                                </div>
+                                                        </div>        
                                                         <br><br>
                                                         <div class="input-group mb-3"style="display: flex;flex-direction: row;gap:40px">
                                                             <select class="form-select" aria-label="Spécialité ">
@@ -215,8 +225,8 @@
                                                                 <option value="PREPA INTEGRE">PREPA INTEGRE</option>
                                                                 <option value="MASTER PRO">MASTER PRO</option>
                                                                 <option value="ING INFO">ING INFO</option>
-                                                                <option value="Cpi 1">Cpi 1</option>
-                                                                <option value="Cpi 2">Cpi 2</option>
+                                                                <option value="L MATH">L MATH</option>
+                                                                <option value="L INFO">L INFO</option>
                                                               </select>
                                                             <label>
                                                                 <input type="number" step="any" class="form-control" placeholder="moyenne" aria-label="moyenne">
@@ -246,7 +256,7 @@
                                 nom: document.querySelector('input[placeholder="Nom"]').value,
                                 prenom: document.querySelector('input[placeholder="Prenom"]').value,
                                 age: document.querySelector('input[placeholder="Age"]').value,
-                                email: document.querySelector('input[placeholder="Email"]').value,
+                                Région: document.querySelector('input[placeholder="Région"]').value,
                                 gouvernorat: document.querySelector('input[placeholder="gouvernorat "]').value,
                                 specialite: document.querySelector('select').value,
                                 moyenne: document.querySelector('input[placeholder="moyenne"]').value,

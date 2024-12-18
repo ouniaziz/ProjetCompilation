@@ -13,6 +13,10 @@ def home():
 def add_etudiant_form():
     return render_template('ajout.html')
 
+@app.route('/add_liste_etudiant')
+def add_liste_etudiant_form():
+    return render_template('ajout_file.html')
+
 # Route pour afficher la page "Our Team" (ourteam.html)
 @app.route('/ourteam')
 def our_team():
@@ -54,6 +58,41 @@ def add_etudiant():
         sheet.append([nom, prenom, age, email, gouvernorat, specialite, moyenne])
         workbook.save('etudiants.xlsx')
 
+        gouvernorat = data['gouvernorat']
+        specialite = data['specialite']
+        moyenne = data['moyenne']
+        return jsonify({"message": "Étudiant ajouté avec succès."}), 200
+    else:
+        return jsonify({"message": "Format de données non supporté."}), 400
+    
+
+
+@app.route('/add_liste_etudiant', methods=['POST'])
+def add_liste_etudiant():
+    if request.is_json:
+        data = request.get_json()
+        nom = data['nom']
+        prenom = data['prenom']
+        age = data['age']
+        email = data['email']
+    
+
+    # Ouvrir ou créer le fichier Excel
+        try:
+            workbook = openpyxl.load_workbook('etudiants.xlsx')
+            sheet = workbook.active
+        except FileNotFoundError:
+            workbook = openpyxl.Workbook()
+            sheet = workbook.active
+            sheet.append(["Nom", "Prenom", "Age", "Email", "Gouvernorat", "Specialité", "Moyenne"])  # En-têtes
+
+        # Ajouter les données dans le fichier Excel
+        sheet.append([nom, prenom, age, email, gouvernorat, specialite, moyenne])
+        workbook.save('etudiants.xlsx')
+
+        gouvernorat = data['gouvernorat']
+        specialite = data['specialite']
+        moyenne = data['moyenne']
         return jsonify({"message": "Étudiant ajouté avec succès."}), 200
     else:
         return jsonify({"message": "Format de données non supporté."}), 400

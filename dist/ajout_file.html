@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Data visualistion</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="static/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+
+    <style>
+        :root {
+            --colorPrimaryNormal: #00b3bb;
+            --colorPrimaryDark: #00979f;
+            --colorPrimaryGlare: #00cdd7;
+            --colorPrimaryHalf: #80d9dd;
+            --colorPrimaryQuarter: #bfecee;
+            --colorPrimaryEighth: #dff5f7;
+            --colorPrimaryPale: #f3f5f7;
+            --colorPrimarySeparator: #f3f5f7;
+            --colorPrimaryOutline: #dff5f7;
+            --colorButtonNormal: #00b3bb;
+            --colorButtonHover: #00cdd7;
+            --colorLinkNormal: #00979f;
+            --colorLinkHover: #00cdd7;
+        }
+
+        .title {
+            font-size: 28px;
+            color: rgb(95, 194, 219);
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+        }
+
+        .title::before,
+        .title::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: rgb(95, 194, 219);
+        }
+
+        .title::before {
+            width: 18px;
+            height: 18px;
+            background-color: rgb(95, 194, 219);
+        }
+
+        .title::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
+
+
+
+
+        .upload_dropZone {
+            color: #0f3c4b;
+            background-color: var(--colorPrimaryPale, #c8dadf);
+            outline: 2px dashed var(--colorPrimaryHalf, #c1ddef);
+            outline-offset: -12px;
+            transition:
+                outline-offset 0.2s ease-out,
+                outline-color 0.3s ease-in-out,
+                background-color 0.2s ease-out;
+        }
+
+        .upload_dropZone.highlight {
+            outline-offset: -4px;
+            outline-color: var(--colorPrimaryNormal, #0576bd);
+            background-color: var(--colorPrimaryEighth, #c8dadf);
+        }
+
+        .upload_svg {
+            fill: var(--colorPrimaryNormal, #0576bd);
+        }
+
+        .btn-upload {
+            color: #fff;
+            background-color: var(--colorPrimaryNormal);
+        }
+
+        .btn-upload:hover,
+        .btn-upload:focus {
+            color: #fff;
+            background-color: var(--colorPrimaryGlare);
+        }
+
+        .upload_img {
+            width: calc(33.333% - (2rem / 3));
+            object-fit: contain;
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+
+
+    <!-- nav bar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html" style="color:rgb(95, 194, 219);">Data visualistion </a>
+        <!-- Sidebar Toggle "titre" -->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+
+    </nav>
+
+
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Menu :</div>
+                        <a class="nav-link" href="{{ url_for('home') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+
+
+                        <div class="sb-sidenav-menu-heading"></div>
+                        <a class="nav-link" href="{{ url_for('add_etudiant_form') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Ajouter etudiant
+                        </a>
+
+                        <a class="nav-link" href="{{ url_for('list_etudiants') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Liste des etudiants
+                        </a>
+
+                        <a class="nav-link" href="{{ url_for('our_team') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Our Team
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Ajouter liste des etudiants</h1>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Ajouter liste des etudiants
+                        </div>
+                        <div class="card-body"
+                            style="display: flex;flex-direction: column ;align-items: center ;justify-content: center;">
+                            <div>
+                                <form>
+                                    <fieldset class="upload_dropZone text-center mb-3 p-4">
+
+                                        <legend class="visually-hidden">Image uploader</legend>
+
+                                        <svg class="upload_svg" width="60" height="60" aria-hidden="true">
+                                            <use href="#icon-imageUpload"></use>
+                                        </svg>
+
+                                        <p class="small my-2">Drag &amp; Drop logo image(s) inside dashed
+                                            region<br><i>or</i></p>
+
+                                        <input id="upload_image_logo" data-post-name="image_logo"
+                                            data-post-url="https://someplace.com/image/uploads/logos/"
+                                            class="position-absolute invisible" type="file" multiple
+                                            accept="image/jpeg, image/png, image/svg+xml" />
+
+                                        <label class="btn btn-upload mb-3" for="upload_image_logo">Choose
+                                            file(s)</label>
+
+                                        <div class="upload_gallery d-flex flex-wrap justify-content-center gap-3 mb-0">
+                                        </div>
+
+                                    </fieldset>
+
+                                </form>
+
+
+                                <svg style="display:none">
+                                    <defs>
+                                        <symbol id="icon-imageUpload" clip-rule="evenodd" viewBox="0 0 96 96">
+                                            <path
+                                                d="M47 6a21 21 0 0 0-12.3 3.8c-2.7 2.1-4.4 5-4.7 7.1-5.8 1.2-10.3 5.6-10.3 10.6 0 6 5.8 11 13 11h12.6V22.7l-7.1 6.8c-.4.3-.9.5-1.4.5-1 0-2-.8-2-1.7 0-.4.3-.9.6-1.2l10.3-8.8c.3-.4.8-.6 1.3-.6.6 0 1 .2 1.4.6l10.2 8.8c.4.3.6.8.6 1.2 0 1-.9 1.7-2 1.7-.5 0-1-.2-1.3-.5l-7.2-6.8v15.6h14.4c6.1 0 11.2-4.1 11.2-9.4 0-5-4-8.8-9.5-9.4C63.8 11.8 56 5.8 47 6Zm-1.7 42.7V38.4h3.4v10.3c0 .8-.7 1.5-1.7 1.5s-1.7-.7-1.7-1.5Z M27 49c-4 0-7 2-7 6v29c0 3 3 6 6 6h42c3 0 6-3 6-6V55c0-4-3-6-7-6H28Zm41 3c1 0 3 1 3 3v19l-13-6a2 2 0 0 0-2 0L44 79l-10-5a2 2 0 0 0-2 0l-9 7V55c0-2 2-3 4-3h41Z M40 62c0 2-2 4-5 4s-5-2-5-4 2-4 5-4 5 2 5 4Z" />
+                                        </symbol>
+                                    </defs>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+
+
+    </div>
+    <script>
+        document.querySelector('.form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Empêche le rechargement de la page
+
+            const formData = {
+                nom: document.querySelector('input[placeholder="Nom"]').value,
+                prenom: document.querySelector('input[placeholder="Prenom"]').value,
+                age: document.querySelector('input[placeholder="Age"]').value,
+                Région: document.querySelector('input[placeholder="Région"]').value,
+                gouvernorat: document.querySelector('input[placeholder="gouvernorat "]').value,
+                specialite: document.querySelector('select').value,
+                moyenne: document.querySelector('input[placeholder="moyenne"]').value,
+            };
+
+            try {
+                const response = await fetch('/add_etudiant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message); // Message de succès
+                    document.querySelector('.form').reset(); // Réinitialise le formulaire
+                } else {
+                    alert('Erreur lors de l\'ajout de l\'étudiant.');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        });
+    </script>
+
+    <script>
+        const preventDefaults = event => {
+            event.preventDefault();
+            event.stopPropagation();
+        };
+
+        const highlight = event =>
+            event.target.classList.add('highlight');
+
+        const unhighlight = event =>
+            event.target.classList.remove('highlight');
+
+        const getInputAndGalleryRefs = element => {
+            const zone = element.closest('.upload_dropZone') || false;
+            const gallery = zone.querySelector('.upload_gallery') || false;
+            const input = zone.querySelector('input[type="file"]') || false;
+            return { input: input, gallery: gallery };
+        }
+
+        const handleDrop = event => {
+            const dataRefs = getInputAndGalleryRefs(event.target);
+            dataRefs.files = event.dataTransfer.files;
+            handleFiles(dataRefs);
+        }
+
+
+        const eventHandlers = zone => {
+
+            const dataRefs = getInputAndGalleryRefs(zone);
+
+            if (!dataRefs.input) return;
+
+            // Prevent default drag behaviors
+            ;['dragenter', 'dragover', 'dragleave', 'drop'].forEach(event => {
+                zone.addEventListener(event, preventDefaults, false);
+                document.body.addEventListener(event, preventDefaults, false);
+            });
+
+            // Highlighting drop area when item is dragged over it
+            ;['dragenter', 'dragover'].forEach(event => {
+                zone.addEventListener(event, highlight, false);
+            });
+            ;['dragleave', 'drop'].forEach(event => {
+                zone.addEventListener(event, unhighlight, false);
+            });
+
+            // Handle dropped files
+            zone.addEventListener('drop', handleDrop, false);
+
+            // Handle browse selected files
+            dataRefs.input.addEventListener('change', event => {
+                dataRefs.files = event.target.files;
+                handleFiles(dataRefs);
+            }, false);
+
+        }
+
+
+        // Initialise ALL dropzones
+        const dropZones = document.querySelectorAll('.upload_dropZone');
+        for (const zone of dropZones) {
+            eventHandlers(zone);
+        }
+
+
+        // No 'image/gif' or PDF or webp allowed here, but it's up to your use case.
+        // Double checks the input "accept" attribute
+        const isImageFile = file =>
+            ['image/jpeg', 'image/png', 'image/svg+xml'].includes(file.type);
+
+
+        function previewFiles(dataRefs) {
+            if (!dataRefs.gallery) return;
+            for (const file of dataRefs.files) {
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onloadend = function () {
+                    let img = document.createElement('img');
+                    img.className = 'upload_img mt-2';
+                    img.setAttribute('alt', file.name);
+                    img.src = reader.result;
+                    dataRefs.gallery.appendChild(img);
+                }
+            }
+        }
+
+        // Based on: https://flaviocopes.com/how-to-upload-files-fetch/
+        const imageUpload = dataRefs => {
+
+            // Multiple source routes, so double check validity
+            if (!dataRefs.files || !dataRefs.input) return;
+
+            const url = dataRefs.input.getAttribute('data-post-url');
+            if (!url) return;
+
+            const name = dataRefs.input.getAttribute('data-post-name');
+            if (!name) return;
+
+            const formData = new FormData();
+            formData.append(name, dataRefs.files);
+
+            fetch(url, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('posted: ', data);
+                    if (data.success === true) {
+                        previewFiles(dataRefs);
+                    } else {
+                        console.log('URL: ', url, '  name: ', name)
+                    }
+                })
+                .catch(error => {
+                    console.error('errored: ', error);
+                });
+        }
+
+
+        // Handle both selected and dropped files
+        const handleFiles = dataRefs => {
+
+            let files = [...dataRefs.files];
+
+            // Remove unaccepted file types
+            files = files.filter(item => {
+                if (!isImageFile(item)) {
+                    console.log('Not an image, ', item.type);
+                }
+                return isImageFile(item) ? item : null;
+            });
+
+            if (!files.length) return;
+            dataRefs.files = files;
+
+            previewFiles(dataRefs);
+            imageUpload(dataRefs);
+        }
+    </script>
+
+
+
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/demo/chart-bar-demo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-simple-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="static/js/scripts.js"></script>
+    <script src="static/js/datatables-simple-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="static/assets/demo/chart-area-demo.js"></script>
+    <script src="static/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
