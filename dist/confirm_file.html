@@ -125,6 +125,10 @@
         .submit:hover {
             background-color: rgb(95, 194, 219);
         }
+
+        .error-row {
+            background-color: #f47d7d;
+        }
     </style>
 </head>
 
@@ -193,7 +197,7 @@
                             style="display: flex;flex-direction: column ;align-items: center ;justify-content: center;">
                             <div>
                                 <form class="form" action="/complete_upload" method="POST">
-                                    <input type="text" name="csv_path" value="{{ csv_path }}">
+                                    <input type="hidden" name="csv_path" value="{{ csv_path }}">
                                     <table class="table" style="overflow: scroll;">
                                         <thead class="bg-light">
                                             <tr>
@@ -208,8 +212,8 @@
                                         </thead>
         
                                         <tbody>
-                                            {% for student in students %}
-                                            <tr>
+                                            {% for row, student in students_enumerated %}
+                                            <tr class="{% if row in errors %}error-row{% endif %}">
                                                 <td>{{ student[0] }}</td>
                                                 <td>{{ student[1] }}</td>
                                                 <td>{{ student[2] }}</td>

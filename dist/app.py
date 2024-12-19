@@ -2,6 +2,7 @@ import os
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 import openpyxl
 import pandas as pd
+import Verification_des_donnees
 
 app = Flask(__name__, template_folder='.')
 
@@ -32,8 +33,9 @@ def get_complete_upload():
     # print("list: ---------------")
     # print(csv_data.values.tolist())
     # print("---------------------")
+    errors = Verification_des_donnees.check_errors(csv_path)
 
-    return render_template('confirm_file.html', students=csv_data.values.tolist(), csv_path=csv_path)
+    return render_template('confirm_file.html', students_enumerated=enumerate(csv_data.values.tolist()), csv_path=csv_path, errors=errors)
 
 # Route pour afficher la page "Our Team" (ourteam.html)
 @app.route('/ourteam')
@@ -114,7 +116,7 @@ def complete_upload():
     concat = request.form.get('concat')
     # Handle the uploaded file (e.g., process CSV)
 
-    if concat:
+    if concat == "true":
         # Read the CSV file
         try:
             csv_data = pd.read_csv(csv_path)
@@ -133,11 +135,13 @@ def complete_upload():
             with pd.ExcelWriter(EXCEL_FILE, engine='openpyxl') as writer:
                 csv_data.to_excel(writer, index=False, header=True)
 
-    # Remove the temporary CSV file
-    os.remove(csv_path)
-
-    # return jsonify({"message": "File uploaded successfully", "csv_path": csv_path}), 200
-    return redirect(url_for('list_etudiants', csv_path=csv_path))
+        # Remove the temporary CSV file
+        os.remove(csv_path)
+        # return jsonify({"message": "File uploaded successfully", "csv_path": csv_path}), 200
+        return redirect(url_for('list_etudiants', csv_path=csv_path))
+    else:
+        os.remove(csv_path)
+        return redirect(url_for('add_liste_etudiant', csv_path=csv_path))
 
 if __name__ == '__main__':
     app.run(debug=True)
