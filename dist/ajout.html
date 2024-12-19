@@ -1,303 +1,324 @@
 <!DOCTYPE html>
 
-    <html lang="en">
-                  <head>
-                      <meta charset="utf-8" />
-                      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-                      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-                      <meta name="description" content="" />
-                      <meta name="author" content="" />
-                      <title>Data visualistion</title>
-                      <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
-                      <link href="static/css/styles.css" rel="stylesheet" />
-                      <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-                      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-                      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-                      <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+<html lang="en">
 
-                    <style>
-                                       
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Data visualistion</title>
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+    <link href="static/css/styles.css" rel="stylesheet" />
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 
-                                        .title {
-                                        font-size: 28px;
-                                        color: rgb(95, 194, 219);
-                                        font-weight: 600;
-                                        letter-spacing: -1px;
-                                        position: relative;
-                                        display: flex;
-                                        align-items: center;
-                                        padding-left: 30px;
-                                        }
+    <style>
+        .title {
+            font-size: 28px;
+            color: rgb(95, 194, 219);
+            font-weight: 600;
+            letter-spacing: -1px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 30px;
+        }
 
-                                        .title::before,.title::after {
-                                        position: absolute;
-                                        content: "";
-                                        height: 16px;
-                                        width: 16px;
-                                        border-radius: 50%;
-                                        left: 0px;
-                                        background-color: rgb(95, 194, 219);
-                                        }
+        .title::before,
+        .title::after {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            left: 0px;
+            background-color: rgb(95, 194, 219);
+        }
 
-                                        .title::before {
-                                        width: 18px;
-                                        height: 18px;
-                                        background-color: rgb(95, 194, 219);
-                                        }
+        .title::before {
+            width: 18px;
+            height: 18px;
+            background-color: rgb(95, 194, 219);
+        }
 
-                                        .title::after {
-                                        width: 18px;
-                                        height: 18px;
-                                        animation: pulse 1s linear infinite;
-                                        }
-
-
+        .title::after {
+            width: 18px;
+            height: 18px;
+            animation: pulse 1s linear infinite;
+        }
 
 
-                                        .form label {
-                                            position: relative;
-                                        }
 
-                                        .form label .input {
-                                        width: 100%;
-                                        padding: 10px 10px 20px 10px;
-                                        outline: 0;
-                                        border: 1px solid rgba(105, 105, 105, 0.397);
-                                        border-radius: 20px;
-                                        }
 
-                                        .form label .input + span {
-                                        position: absolute;
-                                        left: 10px;
-                                        top: 15px;
-                                        color: grey;
-                                        font-size: 0.9em;
-                                        cursor: text;
-                                        transition: 0.3s ease;
-                                        }
+        .form label {
+            position: relative;
+        }
 
-                                        .form label .input:placeholder-shown + span {
-                                        top: 15px;
-                                        font-size: 0.9em;
-                                        }
+        .form label .input {
+            width: 100%;
+            padding: 10px 10px 20px 10px;
+            outline: 0;
+            border: 1px solid rgba(105, 105, 105, 0.397);
+            border-radius: 20px;
+        }
 
-                                        .form label .input:focus + span,.form label .input:valid + span {
-                                        top: 30px;
-                                        font-size: 0.7em;
-                                        font-weight: 600;
-                                        }
+        .form label .input+span {
+            position: absolute;
+            left: 10px;
+            top: 15px;
+            color: grey;
+            font-size: 0.9em;
+            cursor: text;
+            transition: 0.3s ease;
+        }
 
-                                        .form label .input:valid + span {
-                                        color: green;
-                                        }
+        .form label .input:placeholder-shown+span {
+            top: 15px;
+            font-size: 0.9em;
+        }
 
-                                        .submit {
-                                        border: none;
-                                        outline: none;
-                                        background-color: royalblue;
-                                        padding: 10px;
-                                        border-radius: 10px;
-                                        color: #fff;
-                                        font-size: 16px;
-                                        transform: .3s ease;
-                                        }
+        .form label .input:focus+span,
+        .form label .input:valid+span {
+            top: 30px;
+            font-size: 0.7em;
+            font-weight: 600;
+        }
 
-                                        .submit:hover {
-                                        background-color: rgb(95, 194, 219);
-                                        }
+        .form label .input:valid+span {
+            color: green;
+        }
 
-                                     
-                                        @keyframes pulse {
-                                        from {
-                                            transform: scale(0.9);
-                                            opacity: 1;
-                                        }
+        .submit {
+            border: none;
+            outline: none;
+            background-color: royalblue;
+            padding: 10px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 16px;
+            transform: .3s ease;
+        }
 
-                                        to {
-                                            transform: scale(1.8);
-                                            opacity: 0;
-                                        }
-                                        }
-                         </style>
-                    </head>
-                  <body class="sb-nav-fixed">
-                      
-                      
-                      <!-- nav bar --> 
-                      <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
-                          <!-- Navbar Brand-->
-                          <a class="navbar-brand ps-3" href="index.html" style="color:rgb(95, 194, 219);">Data visualistion </a>
-                          <!-- Sidebar Toggle "titre" -->
-                          <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
-                                     
-                      </nav>
-                      
-                      
-                      
-                      <div id="layoutSidenav">
-                        <div id="layoutSidenav_nav">
-                            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
-                                <div class="sb-sidenav-menu">
-                                    <div class="nav">
-                                        <div class="sb-sidenav-menu-heading">Menu :</div>
-                                        <a class="nav-link" href="{{ url_for('home') }}">
-                                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                                            Dashboard
-                                        </a>
-                                        
-                                        
-                                    <div class="sb-sidenav-menu-heading"></div>
-                                        <a class="nav-link" href="{{ url_for('add_etudiant_form') }}">
-                                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                            Ajouter etudiant
-                                        </a>
-                                        
-                                        <a class="nav-link" href="{{ url_for('list_etudiants') }}">
-                                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                            Liste des etudiants
-                                        </a>
-                                        
-                                        <a class="nav-link" href="{{ url_for('our_team') }}">
-                                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                                            Our Team
-                                        </a>
-                                    </div>
-                                </div>
-                            </nav>
+        .submit:hover {
+            background-color: rgb(95, 194, 219);
+        }
+
+
+        @keyframes pulse {
+            from {
+                transform: scale(0.9);
+                opacity: 1;
+            }
+
+            to {
+                transform: scale(1.8);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body class="sb-nav-fixed">
+
+
+    <!-- nav bar -->
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+        <!-- Navbar Brand-->
+        <a class="navbar-brand ps-3" href="index.html" style="color:rgb(95, 194, 219);">Data visualistion </a>
+        <!-- Sidebar Toggle "titre" -->
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i
+                class="fas fa-bars"></i></button>
+
+    </nav>
+
+
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav">
+                        <div class="sb-sidenav-menu-heading">Menu :</div>
+                        <a class="nav-link" href="{{ url_for('home') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                            Dashboard
+                        </a>
+
+
+                        <div class="sb-sidenav-menu-heading"></div>
+                        <a class="nav-link" href="{{ url_for('add_etudiant_form') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Ajouter etudiant
+                        </a>
+
+                        <a class="nav-link" href="{{ url_for('add_liste_etudiant_form') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Ajouter liste d'etudiants
+                        </a>
+
+                        <a class="nav-link" href="{{ url_for('list_etudiants') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Liste des etudiants
+                        </a>
+
+                        <a class="nav-link" href="{{ url_for('our_team') }}">
+                            <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                            Our Team
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4">
+                    <h1 class="mt-4">Ajouter etudiant</h1>
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <i class="fas fa-table me-1"></i>
+                            Ajouter un etudiant
                         </div>
+                        <div class="card-body"
+                            style="display: flex;flex-direction: column ;align-items: center ;justify-content: center;">
+                            <div>
+                                <form class="form" action="/add_etudiant" method="POST">
+                                    <p class="title">Ajouter </p>
+                                    <div style="display: flex;flex-direction: row;gap:40px">
+                                        <label>
+                                            <input type="text" class="form-control" placeholder="Nom" aria-label="nom">
+                                        </label>
 
-              
-                          <div id="layoutSidenav_content">
-                              <main>
-                                  <div class="container-fluid px-4">
-                                    <h1 class="mt-4">Ajouter etudiant</h1>
-                                      <div class="card mb-4">
-                                          <div class="card-header">
-                                              <i class="fas fa-table me-1"></i>
-                                              Ajouter un etudiant
-                                          </div>
-                                          <div class="card-body" style="display: flex;flex-direction: column ;align-items: center ;justify-content: center;">
-                                            <div>
-                                                    <form class="form" action="/add_etudiant" method="POST">
-                                                        <p class="title">Ajouter </p>
-                                                        <div style="display: flex;flex-direction: row;gap:40px">
-                                                            <label>
-                                                                <input type="text" class="form-control" placeholder="Nom" aria-label="nom">
-                                                            </label>
-                                                    
-                                                            <label>
-                                                                <input type="text" class="form-control" placeholder="Prenom" aria-label="prenom">
-                                                            </label>
-                                                        </div>  
-                                                        <br>
-                                                        <label>
-                                                            <input type="number" class="form-control" placeholder="Age" aria-label="Age">
-                                                        </label>
-                                                        <br><br>        
-                                                        <div style="display: flex;gap: 40px;">
-                                                                <label>
-                                                                    <input type="text" class="form-control" placeholder="Région " aria-label="Région ">
-                                                                </label> 
-                                                                <label>
-                                                                    <input type="number" class="form-control" placeholder="Distance" aria-label="Distance">
-                                                                </label>
-                                                        </div>
-                                                        <br>
-                                                        <label class="form-label">L'année dernière :</label>
-                                                        <div style="display: flex;flex-direction: row; gap: 50px;">
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1">
-                                                                    <label class="form-check-label" for="flexRadioDefault1">
-                                                                    present aprés examen
-                                                                    </label>
-                                                                </div>
-                                                                <div class="form-check">
-                                                                    <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
-                                                                    <label class="form-check-label" for="flexRadioDefault2">
-                                                                    absent aprés examen
-                                                                    </label>
-                                                                </div>
-                                                        </div>        
-                                                        <br><br>
-                                                        <div class="input-group mb-3"style="display: flex;flex-direction: row;gap:40px">
-                                                            <select class="form-select" aria-label="Spécialité ">
-                                                                <option selected>Spécialité </option>
-                                                                <option value="PREPA INTEGRE">PREPA INTEGRE</option>
-                                                                <option value="MASTER PRO">MASTER PRO</option>
-                                                                <option value="ING INFO">ING INFO</option>
-                                                                <option value="L MATH">L MATH</option>
-                                                                <option value="L INFO">L INFO</option>
-                                                              </select>
-                                                            <label>
-                                                                <input type="number" step="any" class="form-control" placeholder="moyenne" aria-label="moyenne">
-                                                            </label>    
-                                                        </div>
-                                                              
-                                                        <br><br>
-                                                        <div align="right">
-                                                            <button class="submit" style="width: 200px;font-size:18px;">ajouter</button>
-                                                        </div>
-                                                    </form>
-                                            </div>         
-                                          </div>
-                                      </div>
-                                  </div>
-                              </main>
-                          </div>
-              
-              
-              
-                      </div>
-                      <script>
-                        document.querySelector('.form').addEventListener('submit', async (event) => {
-                            event.preventDefault(); // Empêche le rechargement de la page
-                            
-                            const formData = {
-                                nom: document.querySelector('input[placeholder="Nom"]').value,
-                                prenom: document.querySelector('input[placeholder="Prenom"]').value,
-                                age: document.querySelector('input[placeholder="Age"]').value,
-                                Région: document.querySelector('input[placeholder="Région"]').value,
-                                gouvernorat: document.querySelector('input[placeholder="gouvernorat "]').value,
-                                specialite: document.querySelector('select').value,
-                                moyenne: document.querySelector('input[placeholder="moyenne"]').value,
-                            };
-                        
-                            try {
-                                const response = await fetch('/add_etudiant', {
-                                    method: 'POST',
-                                    headers: {
-                                        'Content-Type': 'application/json',
-                                    },
-                                    body: JSON.stringify(formData),
-                                });
-                        
-                                if (response.ok) {
-                                    const result = await response.json();
-                                    alert(result.message); // Message de succès
-                                    document.querySelector('.form').reset(); // Réinitialise le formulaire
-                                } else {
-                                    alert('Erreur lors de l\'ajout de l\'étudiant.');
-                                }
-                            } catch (error) {
-                                console.error('Erreur:', error);
-                            }
-                        });
-                        </script>
-                        
-              
-                     
-              
-                      <script src="{{ url_for('static', filename='js/scripts.js') }}"></script> 
-                      <script src="{{ url_for('static', filename='assets/demo/chart-area-demo.js') }}"></script>
-                      <script src="{{ url_for('static', filename='assets/demo/chart-bar-demo.js') }}"></script>
-                      <script src="{{ url_for('static', filename='js/datatables-simple-demo.js') }}"></script>  
-                      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-                      <script src="static/js/scripts.js"></script>
-                      <script src="static/js/datatables-simple-demo.js"></script>
-                      <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
-                      <script src="static/assets/demo/chart-area-demo.js"></script>
-                      <script src="static/assets/demo/chart-bar-demo.js"></script>
-                      <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
-                
-                  </body>
-              </html>
+                                        <label>
+                                            <input type="text" class="form-control" placeholder="Prenom"
+                                                aria-label="prenom">
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <label>
+                                        <input type="number" class="form-control" placeholder="Age" aria-label="Age">
+                                    </label>
+                                    <br><br>
+                                    <div style="display: flex;gap: 40px;">
+                                        <label>
+                                            <input type="text" class="form-control" placeholder="Région "
+                                                aria-label="Région ">
+                                        </label>
+                                        <label>
+                                            <input type="number" class="form-control" placeholder="Distance"
+                                                aria-label="Distance">
+                                        </label>
+                                    </div>
+                                    <br>
+                                    <label class="form-label">L'année dernière :</label>
+                                    <div style="display: flex;flex-direction: row; gap: 50px;">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id="flexRadioDefault1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                present aprés examen
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                                id="flexRadioDefault2" checked>
+                                            <label class="form-check-label" for="flexRadioDefault2">
+                                                absent aprés examen
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                    <div class="input-group mb-3" style="display: flex;flex-direction: row;gap:40px">
+                                        <select class="form-select" aria-label="Spécialité ">
+                                            <option selected>Spécialité </option>
+                                            <option value="PREPA INTEGRE">PREPA INTEGRE</option>
+                                            <option value="MASTER PRO">MASTER PRO</option>
+                                            <option value="ING INFO">ING INFO</option>
+                                            <option value="L MATH">L MATH</option>
+                                            <option value="L INFO">L INFO</option>
+                                        </select>
+                                        <label>
+                                            <input type="number" step="any" class="form-control" placeholder="moyenne"
+                                                aria-label="moyenne">
+                                        </label>
+                                    </div>
+
+                                    <br><br>
+                                    <div align="right">
+                                        <button class="submit" style="width: 200px;font-size:18px;">ajouter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+
+
+    </div>
+    <script>
+        document.querySelector('.form').addEventListener('submit', async (event) => {
+            event.preventDefault(); // Empêche le rechargement de la page
+
+            const formData = {
+                nom: document.querySelector('input[placeholder="Nom"]').value,
+                prenom: document.querySelector('input[placeholder="Prenom"]').value,
+                age: document.querySelector('input[placeholder="Age"]').value,
+                Région: document.querySelector('input[placeholder="Région"]').value,
+                gouvernorat: document.querySelector('input[placeholder="gouvernorat "]').value,
+                specialite: document.querySelector('select').value,
+                moyenne: document.querySelector('input[placeholder="moyenne"]').value,
+            };
+
+            try {
+                const response = await fetch('/add_etudiant', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    const result = await response.json();
+                    alert(result.message); // Message de succès
+                    document.querySelector('.form').reset(); // Réinitialise le formulaire
+                } else {
+                    alert('Erreur lors de l\'ajout de l\'étudiant.');
+                }
+            } catch (error) {
+                console.error('Erreur:', error);
+            }
+        });
+    </script>
+
+
+
+
+    <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/demo/chart-area-demo.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/demo/chart-bar-demo.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/datatables-simple-demo.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+    <script src="static/js/scripts.js"></script>
+    <script src="static/js/datatables-simple-demo.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    <script src="static/assets/demo/chart-area-demo.js"></script>
+    <script src="static/assets/demo/chart-bar-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+        crossorigin="anonymous"></script>
+
+</body>
+
+</html>
